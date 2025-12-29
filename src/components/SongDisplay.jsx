@@ -1,0 +1,97 @@
+import React, { useState } from 'react';
+import { songMessage } from '../utils/songUtils';
+
+// To wire up and usse sortSongs, you need to create a controlled select with a new peice of state sortOrder as the select level value
+// and 'none' "sort-ascending" & 'sort-descending' as the option level values.
+
+export const SongDisplay = ({
+  songs,
+  handleDeleteSong,
+  handleEditSong,
+  newlyAddedSongIds,
+  userHasPressedDelete,
+  handleDeleteSongUndo,
+  searchTerm,
+}) => {
+  const [songEditId, setSongEditId] = useState(null);
+  const [songEditedName, setSongEditedName] = useState('');
+  const [songEditedRating, setSongEditedRating] = useState(0);
+  const [isError, setIsError] = useState(false);
+
+  const handleEditClick = (id, name, rating) => {
+    setSongEditId(id);
+    setSongEditedName(name);
+    setSongEditedRating(rating);
+  };
+
+  const handleNameChange = e => {
+    setSongEditedName(e.target.value);
+  };
+
+  const handleRatingChange = e => {
+    setSongEditedRating(Number(e.target.value));
+  };
+
+  const handleCancel = () => {
+    setSongEditId(null);
+    setSongEditedName('');
+    setSongEditedRating(0);
+  };
+
+  const handleConfirm = id => {
+    if (0 > songEditedRating || songEditedRating > 5) {
+      setIsError(true);
+      return;
+    }
+    handleEditSong(id, songEditedName, songEditedRating);
+    setSongEditId(null);
+    setIsError(false);
+  };
+
+  const filterOptions = [{ label: 'All' }, { label: 'Excellent' }, { label: 'Good' }, { label: 'Needs Improvement' }];
+
+  return (
+    <>
+      <div>{songs.length === 0 && !searchTerm && <p>No Songs Visible</p>}</div>
+      <div>{songs.length === 0 && searchTerm && <p>No Songs Match This Category and Search Term</p>}</div>
+      {songs.map(song =>
+        song.id !== songEditId ? (
+          newlyAddedSongIds.includes(song.id) ? (
+            <div key={song.id}>
+              {`${song.name} - ${songMessage(song.rating)} - NEWLY ADDED SONG`}
+              <button onClick={() => handleDeleteSong(song.id)}>Delete Song</button>
+              <button onClick={() => handleEditClick(song.id, song.name, song.rating)}>Edit</button>
+            </div>
+          ) : (
+            <div key={song.id}>
+              {`${song.name} - ${songMessage(song.rating)}`}
+              <button onClick={() => handleDeleteSong(song.id)}>Delete Song</button>
+              <button onClick={() => handleEditClick(song.id, song.name, song.rating)}>Edit</button>
+            </div>
+          )
+        ) : (
+          <div key={song.id}>
+            <div>
+              <div>Edit Name</div>
+              <input type="text" placeholder={song.name} value={songEditedName} onChange={handleNameChange}></input>
+              <div>Edit Rating (0-5)</div>
+              <input type="number" max="5" value={songEditedRating} onChange={handleRatingChange}></input>
+              <div>{isError && <p>Rating Must Be Between 0 And 5</p>}</div>
+              <button onClick={() => handleCancel()}>Cancel</button>
+            </div>
+            <div>
+              <button
+                onClick={() => {
+                  handleConfirm(song.id);
+                }}
+              >
+                Confirm
+              </button>
+            </div>
+          </div>
+        )
+      )}
+      {userHasPressedDelete && <button onClick={handleDeleteSongUndo}>Undo Delete Song</button>}
+    </>
+  );
+};
