@@ -1,7 +1,5 @@
 // Song array
 
-import { findSongById } from './utils/songUtils.js';
-
 export const arrayOfSongs = [
   { id: 1, name: 'Behind', rating: 1 },
   { id: 2, name: 'Getting There', rating: 3 },
@@ -287,5 +285,3 @@ console.log('Average Rating:', averageRating());
 console.log(getTopRatedSongs());
 
 export default arrayOfSongs;
-
-console.log('LATEST:', findSongById(arrayOfSongs, 4));

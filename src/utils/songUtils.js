@@ -110,10 +110,10 @@ export const getTopNSongs = (songs, number) => {
   return topNSongs;
 };
 
-// Undo delete helper function
+// Undo delete helper function to find song and index by ID
 
 export const findSongById = (songs, id) => {
-  const findSong = song => (song.id = id);
+  const findSong = song => song.id === id;
   const index = songs.findIndex(findSong);
 
   if (index === -1) {

@@ -9,6 +9,7 @@ import {
   sortSongs,
   getMinRatingSongs,
   getTopNSongs,
+  findSongById,
 } from './utils/songUtils';
 import { SongDisplay } from './components/SongDisplay';
 import { SongStats } from './components/SongStats';
@@ -56,24 +57,17 @@ function App() {
     }, 5000);
   };
 
-  // handleDeleteSong
-
-  // I need to somehow compute the index of the song with song.id === id - HOW???
-  // Then I need to store {song, index} in lastDeleted state (use a function update) ?
-
   const handleDeleteSong = id => {
     setSongs(prevSongs => {
-      let index = -1;
-      for (const song of prevSongs) {
-        index++;
-        if (song.id === id) {
-          const markedSong = { song: song, index: index };
-          setLastDeleted(markedSong);
-        }
+      const markedSong = findSongById(prevSongs, id);
+      if (markedSong) {
+        setLastDeleted(markedSong);
+        makeTrueForFiveSeconds();
+        return prevSongs.filter(song => song.id !== id);
+      } else {
+        return prevSongs;
       }
-      return prevSongs.filter(song => song.id !== id);
     });
-    makeTrueForFiveSeconds();
   };
 
   // In undo I need to reinsert last deleted at that index using splice
