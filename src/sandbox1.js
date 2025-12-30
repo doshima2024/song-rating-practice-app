@@ -1,5 +1,7 @@
 // Song array
 
+import { findSongById } from './utils/songUtils.js';
+
 export const arrayOfSongs = [
   { id: 1, name: 'Behind', rating: 1 },
   { id: 2, name: 'Getting There', rating: 3 },
@@ -125,7 +127,7 @@ console.log('new array!:', sortSongsByRating(arrayOfSongs));
 
 // More JS Practice: Find a song by id:
 
-const findSongById = (songs, id) => {
+const findSongById1 = (songs, id) => {
   const matchingSong = songs.find(song => id === song.id);
   if (!matchingSong) {
     return null;
@@ -133,7 +135,7 @@ const findSongById = (songs, id) => {
   return matchingSong;
 };
 
-console.log('FOUND SONG!:', findSongById(arrayOfSongs, 3));
+console.log('FOUND SONG!:', findSongById1(arrayOfSongs, 3));
 
 // More JS Practice: Return the top 3 songs (sort and slice practice):
 
@@ -285,3 +287,5 @@ console.log('Average Rating:', averageRating());
 console.log(getTopRatedSongs());
 
 export default arrayOfSongs;
+
+console.log('LATEST:', findSongById(arrayOfSongs, 4));

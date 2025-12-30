@@ -109,3 +109,16 @@ export const getTopNSongs = (songs, number) => {
   const topNSongs = sortedSongs.slice(0, number);
   return topNSongs;
 };
+
+// Undo delete helper function
+
+export const findSongById = (songs, id) => {
+  const findSong = song => (song.id = id);
+  const index = songs.findIndex(findSong);
+
+  if (index === -1) {
+    return null;
+  } else {
+    return { song: songs[index], index: index };
+  }
+};
