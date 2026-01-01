@@ -122,3 +122,21 @@ export const findSongById = (songs, id) => {
     return { song: songs[index], index: index };
   }
 };
+
+// Function to clone a song and add it to the existing array of songs
+
+export const cloneSong = (songs, id) => {
+  let max = 0;
+  for (const song of songs) {
+    if (song.id > max) {
+      max = song.id;
+    }
+  }
+  const newId = max + 1;
+  const findSong = element => element.id === id;
+  const index = songs.findIndex(findSong);
+  const cloneSong = { id: newId, name: songs[index].name, rating: songs[index].rating };
+  return cloneSong;
+};
+
+console.log('TESTING cloneSong function:', cloneSong(arrayOfSongs, 4));
