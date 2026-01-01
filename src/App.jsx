@@ -10,6 +10,7 @@ import {
   getMinRatingSongs,
   getTopNSongs,
   findSongById,
+  cloneSong,
 } from './utils/songUtils';
 import { SongDisplay } from './components/SongDisplay';
 import { SongStats } from './components/SongStats';
@@ -92,6 +93,11 @@ function App() {
     setSongs(updatedSongs);
   };
 
+  const handleCloneSong = id => {
+    const clonedSong = cloneSong(songs, id);
+    setSongs(prevSongs => [...prevSongs, clonedSong]);
+  };
+
   const handleClearFilters = () => {
     setFilterCategory('all');
     setSearchTerm('');
@@ -143,6 +149,7 @@ function App() {
         userHasPressedDelete={userHasPressedDelete}
         searchTerm={searchTerm}
         lastDeleted={lastDeleted}
+        handleCloneSong={handleCloneSong}
       />
       <br></br>
       <SongStats songs={songs} />

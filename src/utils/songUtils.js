@@ -97,6 +97,7 @@ export const returnHighRatedSongs = (songs, threshold) => {
 // Function to return a new array of songs where ratings are >= minRating
 
 export const getMinRatingSongs = (songs, minRating) => {
+  console.log('SONGS STATE AT RUN', songs);
   return songs.filter(song => song.rating >= minRating);
 };
 

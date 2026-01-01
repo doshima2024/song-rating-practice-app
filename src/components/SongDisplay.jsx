@@ -13,6 +13,7 @@ export const SongDisplay = ({
   handleDeleteSongUndo,
   searchTerm,
   lastDeleted,
+  handleCloneSong,
 }) => {
   const [songEditId, setSongEditId] = useState(null);
   const [songEditedName, setSongEditedName] = useState('');
@@ -62,12 +63,14 @@ export const SongDisplay = ({
               {`${song.name} - ${songMessage(song.rating)} - NEWLY ADDED SONG`}
               <button onClick={() => handleDeleteSong(song.id)}>Delete Song</button>
               <button onClick={() => handleEditClick(song.id, song.name, song.rating)}>Edit</button>
+              <button onClick={() => handleCloneSong(song.id)}>Clone Song</button>
             </div>
           ) : (
             <div key={song.id}>
               {`${song.name} - ${songMessage(song.rating)}`}
               <button onClick={() => handleDeleteSong(song.id)}>Delete Song</button>
               <button onClick={() => handleEditClick(song.id, song.name, song.rating)}>Edit</button>
+              <button onClick={() => handleCloneSong(song.id)}>Clone Song</button>
             </div>
           )
         ) : (
