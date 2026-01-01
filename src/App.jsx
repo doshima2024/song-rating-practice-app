@@ -142,6 +142,7 @@ function App() {
         handleDeleteSongUndo={handleDeleteSongUndo}
         userHasPressedDelete={userHasPressedDelete}
         searchTerm={searchTerm}
+        lastDeleted={lastDeleted}
       />
       <br></br>
       <SongStats songs={songs} />

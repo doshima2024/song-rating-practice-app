@@ -12,6 +12,7 @@ export const SongDisplay = ({
   userHasPressedDelete,
   handleDeleteSongUndo,
   searchTerm,
+  lastDeleted,
 }) => {
   const [songEditId, setSongEditId] = useState(null);
   const [songEditedName, setSongEditedName] = useState('');
@@ -91,7 +92,12 @@ export const SongDisplay = ({
           </div>
         )
       )}
-      {userHasPressedDelete && <button onClick={handleDeleteSongUndo}>Undo Delete Song</button>}
+      {userHasPressedDelete && lastDeleted !== null && (
+        <>
+          <p>{`Last Deleted Song: ${lastDeleted.song.name}`}</p>
+          <button onClick={handleDeleteSongUndo}>Undo Delete Song </button>
+        </>
+      )}
     </>
   );
 };
