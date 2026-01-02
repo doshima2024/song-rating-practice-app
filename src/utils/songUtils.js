@@ -97,7 +97,7 @@ export const returnHighRatedSongs = (songs, threshold) => {
 // Function to return a new array of songs where ratings are >= minRating
 
 export const getMinRatingSongs = (songs, minRating) => {
-  console.log('SONGS STATE AT RUN', songs);
+  console.log('SONGS STATE AT RUN', songs); // DEBUG REMOVE!!!
   return songs.filter(song => song.rating >= minRating);
 };
 
@@ -124,7 +124,7 @@ export const findSongById = (songs, id) => {
   }
 };
 
-// Function to clone a song and add it to the existing array of songs
+// Function to clone a song and return the cloned song object (with new ID incremented one up from highest existing ID, and same name and rating as the song clone from)
 
 export const cloneSong = (songs, id) => {
   let max = 0;
