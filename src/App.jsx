@@ -95,6 +95,9 @@ function App() {
 
   const handleCloneSong = id => {
     const clonedSong = cloneSong(songs, id);
+    if (clonedSong === null) {
+      return;
+    }
     setSongs(prevSongs => [...prevSongs, clonedSong]);
   };
 
