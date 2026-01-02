@@ -136,8 +136,12 @@ export const cloneSong = (songs, id) => {
   const newId = max + 1;
   const findSong = element => element.id === id;
   const index = songs.findIndex(findSong);
-  const cloneSong = { id: newId, name: songs[index].name, rating: songs[index].rating };
-  return cloneSong;
+  if (index === -1) {
+    return null;
+  } else {
+    const cloneSong = { id: newId, name: songs[index].name, rating: songs[index].rating };
+    return cloneSong;
+  }
 };
 
 console.log('TESTING cloneSong function:', cloneSong(arrayOfSongs, 4));
