@@ -1,12 +1,12 @@
 // Song array
 
 export const arrayOfSongs = [
-  { id: 1, name: 'Behind', rating: 1 },
-  { id: 2, name: 'Getting There', rating: 3 },
-  { id: 3, name: 'Good and Ready', rating: 5 },
-  { id: 4, name: 'Really Working Hard', rating: 5 },
-  { id: 5, name: 'I Think Practice Helps', rating: 2 },
-  { id: 6, name: 'This Is A Test, Did I Do This?', rating: 4 },
+  { id: 1, name: 'Behind', rating: 1, cloneCount: 0 },
+  { id: 2, name: 'Getting There', rating: 3, cloneCount: 0 },
+  { id: 3, name: 'Good and Ready', rating: 5, cloneCount: 0 },
+  { id: 4, name: 'Really Working Hard', rating: 5, cloneCount: 0 },
+  { id: 5, name: 'I Think Practice Helps', rating: 2, cloneCount: 0 },
+  { id: 6, name: 'This Is A Test, Did I Do This?', rating: 4, cloneCount: 0 },
 ];
 
 // Function to return a category based on the song's numerical rating

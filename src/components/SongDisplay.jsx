@@ -60,14 +60,14 @@ export const SongDisplay = ({
         song.id !== songEditId ? (
           newlyAddedSongIds.includes(song.id) ? (
             <div key={song.id}>
-              {`${song.name} - ${songMessage(song.rating)} - NEWLY ADDED SONG`}
+              {`${song.name} - ${songMessage(song.rating)} - Clone Count: ${song.cloneCount} - NEWLY ADDED SONG`}
               <button onClick={() => handleDeleteSong(song.id)}>Delete Song</button>
               <button onClick={() => handleEditClick(song.id, song.name, song.rating)}>Edit</button>
               <button onClick={() => handleCloneSong(song.id)}>Clone Song</button>
             </div>
           ) : (
             <div key={song.id}>
-              {`${song.name} - ${songMessage(song.rating)}`}
+              {`${song.name} - ${songMessage(song.rating)} - Clone Count: ${song.cloneCount}`}
               <button onClick={() => handleDeleteSong(song.id)}>Delete Song</button>
               <button onClick={() => handleEditClick(song.id, song.name, song.rating)}>Edit</button>
               <button onClick={() => handleCloneSong(song.id)}>Clone Song</button>

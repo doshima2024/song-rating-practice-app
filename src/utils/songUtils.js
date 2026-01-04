@@ -136,12 +136,22 @@ export const cloneSong = (songs, id) => {
   const newId = max + 1;
   const findSong = element => element.id === id;
   const index = songs.findIndex(findSong);
+  songs[index] = {
+    id: id,
+    name: songs[index].name,
+    rating: songs[index].rating,
+    cloneCount: songs[index].cloneCount + 1,
+  };
   if (index === -1) {
     return null;
   } else {
-    const cloneSong = { id: newId, name: songs[index].name, rating: songs[index].rating };
-    return cloneSong;
+    const clonedSong = {
+      id: newId,
+      name: songs[index].name,
+      rating: songs[index].rating,
+      cloneCount: 0,
+    };
+    return clonedSong;
   }
+  // I have the index of the song to be cloned. I can use this to access that song in order to increment it's cloneCount value. How do i incremement its cloneCount value?
 };
-
-console.log('TESTING cloneSong function:', cloneSong(arrayOfSongs, 4));

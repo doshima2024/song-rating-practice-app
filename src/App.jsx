@@ -40,7 +40,7 @@ function App() {
       }
     }
     const newId = max + 1;
-    const newSong = { id: newId, name: nameText, rating: 5 };
+    const newSong = { id: newId, name: nameText, rating: 5, cloneCount: 0 };
     const updatedSongs = [...songs, newSong];
     setSongs(updatedSongs);
     setNewlyAddedSongsIds(prev => [...prev, newId]);
@@ -85,9 +85,6 @@ function App() {
     if (undoTimerIdRef.current) clearTimeout(undoTimerIdRef.current);
   };
 
-  // I need to find the song with the matching ID
-  // I need to create a new array where that one song is updated
-  //I need to call setSongs(newArray)
   const handleEditSong = (id, newName, newRating) => {
     const updatedSongs = songs.map(song => (song.id === id ? { ...song, name: newName, rating: newRating } : song));
     setSongs(updatedSongs);
@@ -98,7 +95,16 @@ function App() {
     if (clonedSong === null) {
       return;
     }
-    setSongs(prevSongs => [...prevSongs, clonedSong]);
+    setSongs(prevSongs => {
+      const updatedSongs = prevSongs.map(song => {
+        if (song.id === id) {
+          return { ...song, cloneCount: song.cloneCount + 1 };
+        } else {
+          return song;
+        }
+      });
+      return [...updatedSongs, clonedSong];
+    });
   };
 
   const handleClearFilters = () => {
