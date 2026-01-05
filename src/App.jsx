@@ -64,6 +64,9 @@ function App() {
     const updatedSongs = [...songs, newSong];
     setSongs(updatedSongs);
     setNewlyAddedSongsIds(prev => [...prev, newId]);
+    setTimeout(() => {
+      setNewlyAddedSongsIds(prevIds => prevIds.filter(Id => Id !== newId));
+    }, 5000);
   };
 
   const makeTrueForFiveSeconds = () => {
