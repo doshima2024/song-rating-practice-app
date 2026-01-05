@@ -1,5 +1,5 @@
 import './App.css';
-import { useState, useMemo, useRef } from 'react';
+import { useState, useMemo, useRef, useEffect } from 'react';
 import arrayOfSongs from './sandbox1';
 import {
   HIGH_RATING_THRESHOLD,
@@ -19,7 +19,20 @@ import { SongControls } from './components/SongControls';
 import { TopSongs } from './components/TopSongs';
 
 function App() {
-  const [songs, setSongs] = useState(arrayOfSongs);
+  const [songs, setSongs] = useState(() => {
+    const currentSongsState = localStorage.getItem('Current_Songs_State');
+    let parsed;
+    try {
+      parsed = JSON.parse(currentSongsState);
+    } catch {
+      return arrayOfSongs;
+    }
+    if (Array.isArray(parsed)) {
+      return parsed;
+    } else {
+      return arrayOfSongs;
+    }
+  });
   const [filterCategory, setFilterCategory] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
   const [sortOrder, setSortOrder] = useState('none');
@@ -31,6 +44,12 @@ function App() {
   const [userHasPressedDelete, setUserHasPressedDelete] = useState(false);
 
   const undoTimerIdRef = useRef(null);
+
+  // write songs state to localStorage
+
+  useEffect(() => {
+    localStorage.setItem('Current_Songs_State', JSON.stringify(songs));
+  }, [songs]);
 
   const handleAddSong = nameText => {
     let max = 0;
