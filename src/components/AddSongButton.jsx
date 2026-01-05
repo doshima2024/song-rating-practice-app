@@ -8,7 +8,8 @@ export const AddSongButton = ({ handleAddSong, nameText, setNameText, newRating,
   const handleRatingChange = e => setNewRating(e.target.value);
 
   const handleClick = () => {
-    if (nameText.trim() === '' || newRating.trim() === '') {
+    const newRatingNumber = Number(newRating);
+    if (nameText.trim() === '' || newRating.trim() === '' || newRatingNumber > 5 || newRatingNumber < 0) {
       setIsError(true);
       return;
     }
@@ -23,7 +24,7 @@ export const AddSongButton = ({ handleAddSong, nameText, setNameText, newRating,
       <div>Add A New Song</div>
       <input type="text" placeholder="Name Here" value={nameText} onChange={handleNameChange}></input>
       <input type="number" max="5" placeholder="Rating Here" value={newRating} onChange={handleRatingChange}></input>
-      <div>{isError && <p>Name and Rating Field Required</p>}</div>
+      <div>{isError && <p>Name and Rating Fields Required. Rating must be between 0 - 5</p>}</div>
       <button onClick={handleClick}>Add New Song</button>
     </>
   );
