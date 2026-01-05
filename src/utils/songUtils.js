@@ -97,12 +97,10 @@ export const returnHighRatedSongs = (songs, threshold) => {
 // Function to return a new array of songs where ratings are >= minRating
 
 export const getMinRatingSongs = (songs, minRating) => {
-  console.log('SONGS STATE AT RUN', songs); // DEBUG REMOVE!!!
   return songs.filter(song => song.rating >= minRating);
 };
 
 // Function to return the top3 songs (or topN) songs
-// I'll need to order the songs in a new array in desc order by rating using .sort and then use .slice to get the [0,3] indeces
 
 export const getTopNSongs = (songs, number) => {
   const songsToSort = [...songs];
@@ -136,12 +134,6 @@ export const cloneSong = (songs, id) => {
   const newId = max + 1;
   const findSong = element => element.id === id;
   const index = songs.findIndex(findSong);
-  songs[index] = {
-    id: id,
-    name: songs[index].name,
-    rating: songs[index].rating,
-    cloneCount: songs[index].cloneCount + 1,
-  };
   if (index === -1) {
     return null;
   } else {
@@ -153,5 +145,4 @@ export const cloneSong = (songs, id) => {
     };
     return clonedSong;
   }
-  // I have the index of the song to be cloned. I can use this to access that song in order to increment it's cloneCount value. How do i incremement its cloneCount value?
 };
