@@ -42,6 +42,7 @@ function App() {
   const [newlyAddedSongIds, setNewlyAddedSongsIds] = useState([]);
   const [lastDeleted, setLastDeleted] = useState(null);
   const [userHasPressedDelete, setUserHasPressedDelete] = useState(false);
+  const [newRating, setNewRating] = useState('');
 
   const undoTimerIdRef = useRef(null);
 
@@ -51,7 +52,7 @@ function App() {
     localStorage.setItem('Current_Songs_State', JSON.stringify(songs));
   }, [songs]);
 
-  const handleAddSong = nameText => {
+  const handleAddSong = (nameText, rating) => {
     let max = 0;
     for (const song of songs) {
       if (song.id > max) {
@@ -59,7 +60,7 @@ function App() {
       }
     }
     const newId = max + 1;
-    const newSong = { id: newId, name: nameText, rating: 5, cloneCount: 0 };
+    const newSong = { id: newId, name: nameText, rating: Number(rating), cloneCount: 0 };
     const updatedSongs = [...songs, newSong];
     setSongs(updatedSongs);
     setNewlyAddedSongsIds(prev => [...prev, newId]);
@@ -182,7 +183,13 @@ function App() {
       <br></br>
       <SongStats songs={songs} />
       <br></br>
-      <AddSongButton handleAddSong={handleAddSong} nameText={nameText} setNameText={setNameText} />
+      <AddSongButton
+        handleAddSong={handleAddSong}
+        nameText={nameText}
+        setNameText={setNameText}
+        newRating={newRating}
+        setNewRating={setNewRating}
+      />
     </>
   );
 }
