@@ -13,7 +13,7 @@ export const AddSongButton = ({ handleAddSong, nameText, setNameText, newRating,
       setIsError(true);
       return;
     }
-    handleAddSong(nameText, newRating);
+    handleAddSong(nameText, newRatingNumber);
     setNameText('');
     setNewRating('');
     setIsError(false);
