@@ -43,6 +43,7 @@ function App() {
   const [lastDeleted, setLastDeleted] = useState(null);
   const [userHasPressedDelete, setUserHasPressedDelete] = useState(false);
   const [newRating, setNewRating] = useState('');
+  const [selectedSongIds, setSelectedSongIds] = useState([]);
 
   const undoTimerIdRef = useRef(null);
 
@@ -51,6 +52,18 @@ function App() {
   useEffect(() => {
     localStorage.setItem('Current_Songs_State', JSON.stringify(songs));
   }, [songs]);
+
+  const toggleSelectedSongs = id => {
+    setSelectedSongIds(prev => {
+      if (prev.includes(id)) {
+        return prev.filter(ID => ID !== id);
+      } else {
+        return [...prev, id];
+      }
+    });
+  };
+
+  console.log('Selected Song IDs:', selectedSongIds);
 
   const handleAddSong = (nameText, rating) => {
     let max = 0;
@@ -153,6 +166,8 @@ function App() {
   const totalSongsCount = songs.length;
   const visibleSongsCount = visibleSongs.length;
 
+  console.log('App selectedSongIds:', selectedSongIds); // DEBUG REMOVE!!!
+
   return (
     <>
       <TopSongs songs={top3Songs} />
@@ -182,6 +197,8 @@ function App() {
         searchTerm={searchTerm}
         lastDeleted={lastDeleted}
         handleCloneSong={handleCloneSong}
+        toggleSelectedSongs={toggleSelectedSongs}
+        selectedSongIds={selectedSongIds}
       />
       <br></br>
       <SongStats songs={songs} />
