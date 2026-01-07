@@ -143,6 +143,14 @@ function App() {
     });
   };
 
+  const handleDeleteMultipleSongs = () => {
+    // I must setSongs to songs without the songs with passed in ID's (this is an array of IDs)
+    // What method will I use to do this
+    setSongs(prevSongs => {
+      return prevSongs.filter(song => !selectedSongIds.includes(song.id));
+    });
+  };
+
   const handleClearFilters = () => {
     setFilterCategory('all');
     setSearchTerm('');
@@ -199,6 +207,7 @@ function App() {
         handleCloneSong={handleCloneSong}
         toggleSelectedSongs={toggleSelectedSongs}
         selectedSongIds={selectedSongIds}
+        handleDeleteMultipleSongs={handleDeleteMultipleSongs}
       />
       <br></br>
       <SongStats songs={songs} />

@@ -13,6 +13,7 @@ export const SongDisplay = ({
   handleCloneSong,
   toggleSelectedSongs,
   selectedSongIds,
+  handleDeleteMultipleSongs,
 }) => {
   const [songEditId, setSongEditId] = useState(null);
   const [songEditedName, setSongEditedName] = useState('');
@@ -104,6 +105,11 @@ export const SongDisplay = ({
           </div>
         )
       )}
+      <div>
+        {selectedSongIds.length !== 0 && (
+          <button onClick={() => handleDeleteMultipleSongs(selectedSongIds)}>Delete Checked Songs</button>
+        )}
+      </div>
       {userHasPressedDelete && lastDeleted !== null && (
         <>
           <p>{`Last Deleted Song: ${lastDeleted.song.name}`}</p>
