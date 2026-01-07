@@ -8,7 +8,6 @@ export const AddSongButton = ({ handleAddSong, nameText, setNameText, newRating,
   const handleRatingChange = e => setNewRating(e.target.value);
 
   const handleClick = () => {
-    console.log('clicked'); // DEBUG REMOVE!!!
     const newRatingNumber = Number(newRating);
     if (nameText.trim() === '' || newRating.trim() === '' || newRatingNumber > 5 || newRatingNumber < 0) {
       setIsError(true);
