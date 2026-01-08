@@ -107,7 +107,7 @@ export const SongDisplay = ({
       )}
       <div>
         {selectedSongIds.length !== 0 && (
-          <button onClick={() => handleDeleteMultipleSongs(selectedSongIds)}>Delete Checked Songs</button>
+          <button onClick={() => handleDeleteMultipleSongs()}>Delete Checked Songs</button>
         )}
       </div>
       {userHasPressedDelete && lastDeleted !== null && (
