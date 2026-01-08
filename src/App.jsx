@@ -173,8 +173,6 @@ function App() {
   const totalSongsCount = songs.length;
   const visibleSongsCount = visibleSongs.length;
 
-  console.log('App selectedSongIds:', selectedSongIds); // DEBUG REMOVE!!!
-
   return (
     <>
       <TopSongs songs={top3Songs} />
