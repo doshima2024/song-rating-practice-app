@@ -44,6 +44,7 @@ function App() {
   const [userHasPressedDelete, setUserHasPressedDelete] = useState(false);
   const [newRating, setNewRating] = useState('');
   const [selectedSongIds, setSelectedSongIds] = useState([]);
+  const [newBulkRating, setNewBulkRating] = useState('');
 
   const undoTimerIdRef = useRef(null);
 
@@ -183,6 +184,26 @@ function App() {
     setSelectedSongIds([]);
   };
 
+  const handleEditMultipleRatings = () => {
+    setSongs(prevSongs => {
+      const songsWithEditedRatings = prevSongs.map(song => {
+        if (selectedSongIds.includes(song.id)) {
+          const updatedSong = {
+            id: song.id,
+            name: song.name,
+            rating: newBulkRating,
+            cloneCount: song.cloneCount,
+          };
+          return updatedSong;
+        } else {
+          return song;
+        }
+      });
+      return songsWithEditedRatings;
+    });
+    setSelectedSongIds([]);
+  };
+
   const handleClearFilters = () => {
     setFilterCategory('all');
     setSearchTerm('');
@@ -239,6 +260,9 @@ function App() {
         selectedSongIds={selectedSongIds}
         handleDeleteMultipleSongs={handleDeleteMultipleSongs}
         handleCloneMultipleSongs={handleCloneMultipleSongs}
+        newBulkRating={newBulkRating}
+        setNewBulkRating={setNewBulkRating}
+        handleEditMultipleRatings={handleEditMultipleRatings}
       />
       <br></br>
       <SongStats songs={songs} />

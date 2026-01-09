@@ -15,6 +15,9 @@ export const SongDisplay = ({
   selectedSongIds,
   handleDeleteMultipleSongs,
   handleCloneMultipleSongs,
+  newBulkRating,
+  setNewBulkRating,
+  handleEditMultipleRatings,
 }) => {
   const [songEditId, setSongEditId] = useState(null);
   const [songEditedName, setSongEditedName] = useState('');
@@ -49,6 +52,10 @@ export const SongDisplay = ({
     handleEditSong(id, songEditedName, songEditedRating);
     setSongEditId(null);
     setIsError(false);
+  };
+
+  const handleBulkRatingChange = e => {
+    setNewBulkRating(Number(e.target.value));
   };
 
   const filterOptions = [{ label: 'All' }, { label: 'Excellent' }, { label: 'Good' }, { label: 'Needs Improvement' }];
@@ -111,6 +118,11 @@ export const SongDisplay = ({
           <>
             <button onClick={() => handleDeleteMultipleSongs()}>Delete All Checked Songs</button>
             <button onClick={() => handleCloneMultipleSongs()}>Clone All Checked Songs</button>
+            <div>
+              <label>Edit Rating For All Checked Songs </label>
+              <input type="number" max="5" min="0" value={newBulkRating} onChange={handleBulkRatingChange}></input>
+              <button onClick={() => handleEditMultipleRatings()}>Apply</button>
+            </div>
           </>
         )}
       </div>
