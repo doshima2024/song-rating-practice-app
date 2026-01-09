@@ -14,6 +14,7 @@ export const SongDisplay = ({
   toggleSelectedSongs,
   selectedSongIds,
   handleDeleteMultipleSongs,
+  handleCloneMultipleSongs,
 }) => {
   const [songEditId, setSongEditId] = useState(null);
   const [songEditedName, setSongEditedName] = useState('');
@@ -107,7 +108,10 @@ export const SongDisplay = ({
       )}
       <div>
         {selectedSongIds.length !== 0 && (
-          <button onClick={() => handleDeleteMultipleSongs()}>Delete Checked Songs</button>
+          <>
+            <button onClick={() => handleDeleteMultipleSongs()}>Delete All Checked Songs</button>
+            <button onClick={() => handleCloneMultipleSongs()}>Clone All Checked Songs</button>
+          </>
         )}
       </div>
       {userHasPressedDelete && lastDeleted !== null && (

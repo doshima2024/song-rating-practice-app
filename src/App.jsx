@@ -143,6 +143,39 @@ function App() {
     });
   };
 
+  const handleCloneMultipleSongs = () => {
+    setSongs(prevSongs => {
+      const clonedSongs = [];
+      let max = 0;
+      for (const song of prevSongs) {
+        if (song.id > max) {
+          max = song.id;
+        }
+      }
+      let nextId = max + 1;
+      const updatedOriginals = prevSongs.map(song => {
+        if (selectedSongIds.includes(song.id)) {
+          const updatedOriginalSong = { ...song, cloneCount: song.cloneCount + 1 };
+          const clonedSong = {
+            id: nextId,
+            name: song.name,
+            rating: song.rating,
+            cloneCount: 0,
+          };
+          nextId++;
+          clonedSongs.push(clonedSong);
+          return updatedOriginalSong;
+        } else {
+          return song;
+        }
+      });
+      const updatedSongs = [...updatedOriginals, ...clonedSongs];
+
+      return updatedSongs;
+    });
+    setSelectedSongIds([]);
+  };
+
   const handleDeleteMultipleSongs = () => {
     setSongs(prevSongs => {
       return prevSongs.filter(song => !selectedSongIds.includes(song.id));
@@ -205,6 +238,7 @@ function App() {
         toggleSelectedSongs={toggleSelectedSongs}
         selectedSongIds={selectedSongIds}
         handleDeleteMultipleSongs={handleDeleteMultipleSongs}
+        handleCloneMultipleSongs={handleCloneMultipleSongs}
       />
       <br></br>
       <SongStats songs={songs} />
