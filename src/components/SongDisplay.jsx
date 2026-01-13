@@ -127,17 +127,23 @@ export const SongDisplay = ({
           </>
         )}
       </div>
-      {userHasPressedDelete && lastDeleted !== null && (
-        <>
-          <p>{`Last Deleted Song: ${lastDeleted.song.name}`}</p>
+      {userHasPressedDelete && lastDeleted !== null && lastDeleted.length === 1 && (
+        <div>
+          <p>{`Last Deleted Song: ${lastDeleted.map(song => song.song.name)}`}</p>
+
+          {/* FIX THIS! currently displaying last deleted name as undefined */}
           <button onClick={handleDeleteSongUndo}>Undo Delete Song </button>
+        </div>
+      )}
+
+      {userHasPressedDelete && lastDeleted !== null && lastDeleted.length > 1 && (
+        <>
+          <div>
+            <p>{`Last Deleted Song: ${lastDeleted.map(song => song.song.name)}`}</p>
+            <button onClick={() => handleDeleteMultipleSongsUndo()}>Undo Delete Songs</button>
+          </div>
         </>
       )}
-      <>
-        <div>
-          <button onClick={() => handleDeleteMultipleSongsUndo()}>Undo Delete Songs</button>
-        </div>
-      </>
     </>
   );
 };

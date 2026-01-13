@@ -99,7 +99,7 @@ function App() {
     setSongs(prevSongs => {
       const markedSong = findSongById(prevSongs, id);
       if (markedSong) {
-        setLastDeleted(markedSong);
+        setLastDeleted([markedSong]);
         makeTrueForFiveSeconds();
         return prevSongs.filter(song => song.id !== id);
       } else {
@@ -114,11 +114,11 @@ function App() {
     if (!lastDeleted) return;
     setSongs(prevSongs => {
       const undoneSongsArray = [...prevSongs];
-      undoneSongsArray.splice(lastDeleted.index, 0, lastDeleted.song);
+      undoneSongsArray.splice(lastDeleted.index, 0, lastDeleted[0].song);
       return undoneSongsArray;
     });
     setUserHasPressedDelete(false);
-    setLastDeleted(null);
+    setLastDeleted([]);
     if (undoTimerIdRef.current) clearTimeout(undoTimerIdRef.current);
   };
 
@@ -135,6 +135,7 @@ function App() {
       return prevSongs.filter(song => !selectedSongIds.includes(song.id));
     });
     setSelectedSongIds([]);
+    makeTrueForFiveSeconds();
   };
 
   const handleDeleteMultipleSongsUndo = () => {
