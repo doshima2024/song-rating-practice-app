@@ -18,6 +18,7 @@ export const SongDisplay = ({
   newBulkRating,
   setNewBulkRating,
   handleEditMultipleRatings,
+  handleDeleteMultipleSongsUndo,
 }) => {
   const [songEditId, setSongEditId] = useState(null);
   const [songEditedName, setSongEditedName] = useState('');
@@ -132,6 +133,11 @@ export const SongDisplay = ({
           <button onClick={handleDeleteSongUndo}>Undo Delete Song </button>
         </>
       )}
+      <>
+        <div>
+          <button onClick={() => handleDeleteMultipleSongsUndo()}>Undo Delete Songs</button>
+        </div>
+      </>
     </>
   );
 };

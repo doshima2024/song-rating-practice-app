@@ -122,6 +122,34 @@ function App() {
     if (undoTimerIdRef.current) clearTimeout(undoTimerIdRef.current);
   };
 
+  const handleDeleteMultipleSongs = () => {
+    setSongs(prevSongs => {
+      const deletedItems = [];
+      const songsSpreadArray = [...prevSongs];
+      songsSpreadArray.forEach((song, index) => {
+        if (selectedSongIds.includes(song.id)) {
+          deletedItems.push({ song: song, index: index });
+        }
+      });
+      setLastDeleted(deletedItems); // stores last deleted songs and their indices as an array of objects - shape: [{song: {song}, index: index}]
+      return prevSongs.filter(song => !selectedSongIds.includes(song.id));
+    });
+    setSelectedSongIds([]);
+  };
+
+  const handleDeleteMultipleSongsUndo = () => {
+    if (lastDeleted.length === 0) return;
+    setSongs(prevSongs => {
+      const renewedArray = [...prevSongs];
+      for (const song of lastDeleted) {
+        renewedArray.splice(song.index, 0, song.song);
+      }
+      return renewedArray;
+    });
+    setLastDeleted([]);
+    setSelectedSongIds([]);
+  };
+
   const handleEditSong = (id, newName, newRating) => {
     const updatedSongs = songs.map(song => (song.id === id ? { ...song, name: newName, rating: newRating } : song));
     setSongs(updatedSongs);
@@ -173,13 +201,6 @@ function App() {
       const updatedSongs = [...updatedOriginals, ...clonedSongs];
 
       return updatedSongs;
-    });
-    setSelectedSongIds([]);
-  };
-
-  const handleDeleteMultipleSongs = () => {
-    setSongs(prevSongs => {
-      return prevSongs.filter(song => !selectedSongIds.includes(song.id));
     });
     setSelectedSongIds([]);
   };
@@ -263,6 +284,7 @@ function App() {
         newBulkRating={newBulkRating}
         setNewBulkRating={setNewBulkRating}
         handleEditMultipleRatings={handleEditMultipleRatings}
+        handleDeleteMultipleSongsUndo={handleDeleteMultipleSongsUndo}
       />
       <br></br>
       <SongStats songs={songs} />
