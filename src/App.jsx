@@ -141,8 +141,10 @@ function App() {
     if (lastDeleted.length === 0) return;
     setSongs(prevSongs => {
       const renewedArray = [...prevSongs];
-      for (const song of lastDeleted) {
-        renewedArray.splice(song.index, 0, song.song);
+      const deletedSongsCopy = [...lastDeleted];
+      const deletedSongsSorted = deletedSongsCopy.sort((a, b) => b.index - a.index); // ensure
+      for (const deletedItem of deletedSongsSorted) {
+        renewedArray.splice(deletedItem.index, 0, deletedItem.song);
       }
       return renewedArray;
     });
