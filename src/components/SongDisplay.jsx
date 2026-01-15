@@ -139,7 +139,7 @@ export const SongDisplay = ({
       {userHasPressedDelete && lastDeleted !== null && lastDeleted.length > 1 && (
         <>
           <div>
-            <p>{`Last Deleted Song: ${lastDeleted.map(song => song.song.name)}`}</p>
+            <p>{`Last Deleted Songs: ${lastDeleted.map(song => song.song.name)}`}</p>
             <button onClick={() => handleDeleteMultipleSongsUndo()}>Undo Delete Songs</button>
           </div>
         </>

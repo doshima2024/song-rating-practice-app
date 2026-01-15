@@ -151,6 +151,7 @@ function App() {
     });
     setLastDeleted([]);
     setSelectedSongIds([]);
+    if (undoTimerIdRef.current) clearTimeout(undoTimerIdRef.current);
   };
 
   const handleEditSong = (id, newName, newRating) => {
