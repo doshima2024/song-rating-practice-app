@@ -113,9 +113,9 @@ function App() {
   const handleDeleteSongUndo = () => {
     if (!lastDeleted) return;
     setSongs(prevSongs => {
-      const undoneSongsArray = [...prevSongs];
-      undoneSongsArray.splice(lastDeleted.index, 0, lastDeleted[0].song);
-      return undoneSongsArray;
+      const songsArray = [...prevSongs];
+      songsArray.splice(lastDeleted.index, 0, lastDeleted[0].song);
+      return songsArray;
     });
     setUserHasPressedDelete(false);
     setLastDeleted([]);
