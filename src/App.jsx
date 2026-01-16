@@ -141,13 +141,13 @@ function App() {
   const handleDeleteMultipleSongsUndo = () => {
     if (lastDeleted.length === 0) return;
     setSongs(prevSongs => {
-      const renewedArray = [...prevSongs];
-      const deletedSongsCopy = [...lastDeleted];
-      const deletedSongsSorted = deletedSongsCopy.sort((a, b) => b.index - a.index); // ensure
+      const prevSongsCopy = [...prevSongs];
+      const lastDeletedCopy = [...lastDeleted];
+      const deletedSongsSorted = lastDeletedCopy.sort((a, b) => b.index - a.index);
       for (const deletedItem of deletedSongsSorted) {
-        renewedArray.splice(deletedItem.index, 0, deletedItem.song);
+        prevSongsCopy.splice(deletedItem.index, 0, deletedItem.song);
       }
-      return renewedArray;
+      return prevSongsCopy;
     });
     setLastDeleted([]);
     setSelectedSongIds([]);
