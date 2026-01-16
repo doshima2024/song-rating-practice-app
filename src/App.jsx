@@ -143,7 +143,7 @@ function App() {
     setSongs(prevSongs => {
       const prevSongsCopy = [...prevSongs];
       const lastDeletedCopy = [...lastDeleted];
-      const deletedSongsSorted = lastDeletedCopy.sort((a, b) => b.index - a.index);
+      const deletedSongsSorted = lastDeletedCopy.sort((a, b) => a.index - b.index);
       for (const deletedItem of deletedSongsSorted) {
         prevSongsCopy.splice(deletedItem.index, 0, deletedItem.song);
       }
@@ -239,13 +239,13 @@ function App() {
 
   const filteredSongs = useMemo(
     () => filterSongs(songs, filterCategory, searchTerm),
-    [songs, filterCategory, searchTerm]
+    [songs, filterCategory, searchTerm],
   );
   const songsWithMinRating = useMemo(() => getMinRatingSongs(filteredSongs, minRating), [filteredSongs, minRating]);
   const sortedSongs = useMemo(() => sortSongs(songsWithMinRating, sortOrder), [songsWithMinRating, sortOrder]);
   const visibleSongs = useMemo(
     () => (highRatedSongsToggle ? returnHighRatedSongs(sortedSongs, HIGH_RATING_THRESHOLD) : sortedSongs),
-    [highRatedSongsToggle, sortedSongs]
+    [highRatedSongsToggle, sortedSongs],
   );
   const top3Songs = useMemo(() => getTopNSongs(visibleSongs, TOP_N_SONGS), [visibleSongs]);
 
