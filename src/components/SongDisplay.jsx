@@ -59,7 +59,8 @@ export const SongDisplay = ({
     setNewBulkRating(Number(e.target.value));
   };
 
-  const filterOptions = [{ label: 'All' }, { label: 'Excellent' }, { label: 'Good' }, { label: 'Needs Improvement' }];
+  const deletedNames = lastDeleted.map(deletedItem => deletedItem.song.name).join(', ');
+  const isMultipleDeletes = lastDeleted.length > 1;
 
   return (
     <>
@@ -127,20 +128,20 @@ export const SongDisplay = ({
           </>
         )}
       </div>
-      {userHasPressedDelete && lastDeleted.length === 1 && (
+      {userHasPressedDelete && lastDeleted.length > 0 && (
         <div>
-          <p>{`Last Deleted Song: ${lastDeleted.map(deletedItem => deletedItem.song.name)}`}</p>
-          <button onClick={handleDeleteSongUndo}>Undo Delete Song </button>
-        </div>
-      )}
+          {isMultipleDeletes ? (
+            <p>Last Deleted Songs: {deletedNames}</p>
+          ) : (
+            <p>Last Deleted Song: {lastDeleted[0].song.name}</p>
+          )}
 
-      {userHasPressedDelete && lastDeleted.length > 1 && (
-        <>
-          <div>
-            <p>{`Last Deleted Songs: ${lastDeleted.map(deletedItem => deletedItem.song.name)}`}</p>
-            <button onClick={() => handleDeleteMultipleSongsUndo()}>Undo Delete Songs</button>
-          </div>
-        </>
+          {isMultipleDeletes ? (
+            <button onClick={handleDeleteMultipleSongsUndo}>Undo Delete Songs</button>
+          ) : (
+            <button onClick={handleDeleteSongUndo}>Undo Delete Song</button>
+          )}
+        </div>
       )}
     </>
   );
