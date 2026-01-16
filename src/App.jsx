@@ -40,7 +40,7 @@ function App() {
   const [minRating, setMinRating] = useState(0);
   const [nameText, setNameText] = useState('');
   const [newlyAddedSongIds, setNewlyAddedSongsIds] = useState([]);
-  const [lastDeleted, setLastDeleted] = useState(null);
+  const [lastDeleted, setLastDeleted] = useState([]);
   const [userHasPressedDelete, setUserHasPressedDelete] = useState(false);
   const [newRating, setNewRating] = useState('');
   const [selectedSongIds, setSelectedSongIds] = useState([]);
@@ -111,10 +111,10 @@ function App() {
   // In undo I need to reinsert last deleted at that index using splice
 
   const handleDeleteSongUndo = () => {
-    if (!lastDeleted) return;
+    if (lastDeleted.length === 0) return;
     setSongs(prevSongs => {
       const songsArray = [...prevSongs];
-      songsArray.splice(lastDeleted.index, 0, lastDeleted[0].song);
+      songsArray.splice(lastDeleted[0].index, 0, lastDeleted[0].song);
       return songsArray;
     });
     setUserHasPressedDelete(false);
