@@ -17,6 +17,7 @@ import { SongStats } from './components/SongStats';
 import { AddSongButton } from './components/AddSongButton';
 import { SongControls } from './components/SongControls';
 import { TopSongs } from './components/TopSongs';
+import './App.css';
 
 function App() {
   const [songs, setSongs] = useState(() => {
@@ -253,54 +254,56 @@ function App() {
   const visibleSongsCount = visibleSongs.length;
 
   return (
-    <>
-      <TopSongs songs={top3Songs} />
-      <br></br>
-      <SongControls
-        filterCategory={filterCategory}
-        setFilterCategory={setFilterCategory}
-        searchTerm={searchTerm}
-        setSearchTerm={setSearchTerm}
-        sortOrder={sortOrder}
-        setSortOrder={setSortOrder}
-        handleClearFilters={handleClearFilters}
-        highRatedSongsToggle={highRatedSongsToggle}
-        setHighRatedSongsToggle={setHighRatedSongsToggle}
-        totalSongsCount={totalSongsCount}
-        visibleSongsCount={visibleSongsCount}
-        minRating={minRating}
-        setMinRating={setMinRating}
-      />
-      <SongDisplay
-        songs={visibleSongs}
-        handleDeleteSong={handleDeleteSong}
-        handleEditSong={handleEditSong}
-        newlyAddedSongIds={newlyAddedSongIds}
-        handleDeleteSongUndo={handleDeleteSongUndo}
-        userHasPressedDelete={userHasPressedDelete}
-        searchTerm={searchTerm}
-        lastDeleted={lastDeleted}
-        handleCloneSong={handleCloneSong}
-        toggleSelectedSongs={toggleSelectedSongs}
-        selectedSongIds={selectedSongIds}
-        handleDeleteMultipleSongs={handleDeleteMultipleSongs}
-        handleCloneMultipleSongs={handleCloneMultipleSongs}
-        newBulkRating={newBulkRating}
-        setNewBulkRating={setNewBulkRating}
-        handleEditMultipleRatings={handleEditMultipleRatings}
-        handleDeleteMultipleSongsUndo={handleDeleteMultipleSongsUndo}
-      />
-      <br></br>
-      <SongStats songs={songs} />
-      <br></br>
-      <AddSongButton
-        handleAddSong={handleAddSong}
-        nameText={nameText}
-        setNameText={setNameText}
-        newRating={newRating}
-        setNewRating={setNewRating}
-      />
-    </>
+    <div className="app">
+      <>
+        <TopSongs songs={top3Songs} />
+        <br></br>
+        <SongControls
+          filterCategory={filterCategory}
+          setFilterCategory={setFilterCategory}
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+          sortOrder={sortOrder}
+          setSortOrder={setSortOrder}
+          handleClearFilters={handleClearFilters}
+          highRatedSongsToggle={highRatedSongsToggle}
+          setHighRatedSongsToggle={setHighRatedSongsToggle}
+          totalSongsCount={totalSongsCount}
+          visibleSongsCount={visibleSongsCount}
+          minRating={minRating}
+          setMinRating={setMinRating}
+        />
+        <SongDisplay
+          songs={visibleSongs}
+          handleDeleteSong={handleDeleteSong}
+          handleEditSong={handleEditSong}
+          newlyAddedSongIds={newlyAddedSongIds}
+          handleDeleteSongUndo={handleDeleteSongUndo}
+          userHasPressedDelete={userHasPressedDelete}
+          searchTerm={searchTerm}
+          lastDeleted={lastDeleted}
+          handleCloneSong={handleCloneSong}
+          toggleSelectedSongs={toggleSelectedSongs}
+          selectedSongIds={selectedSongIds}
+          handleDeleteMultipleSongs={handleDeleteMultipleSongs}
+          handleCloneMultipleSongs={handleCloneMultipleSongs}
+          newBulkRating={newBulkRating}
+          setNewBulkRating={setNewBulkRating}
+          handleEditMultipleRatings={handleEditMultipleRatings}
+          handleDeleteMultipleSongsUndo={handleDeleteMultipleSongsUndo}
+        />
+        <br></br>
+        <SongStats songs={songs} />
+        <br></br>
+        <AddSongButton
+          handleAddSong={handleAddSong}
+          nameText={nameText}
+          setNameText={setNameText}
+          newRating={newRating}
+          setNewRating={setNewRating}
+        />
+      </>
+    </div>
   );
 }
 

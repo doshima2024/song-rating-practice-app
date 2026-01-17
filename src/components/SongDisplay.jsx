@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { songMessage } from '../utils/songUtils';
+import { Modal } from './Modal';
 
 export const SongDisplay = ({
   songs,
@@ -24,6 +25,7 @@ export const SongDisplay = ({
   const [songEditedName, setSongEditedName] = useState('');
   const [songEditedRating, setSongEditedRating] = useState(0);
   const [isError, setIsError] = useState(false);
+  const [isSongDetailsModalOpen, setIsSongDetailsModalOpen] = useState(false);
 
   const handleEditClick = (id, name, rating) => {
     setSongEditId(id);
@@ -74,6 +76,7 @@ export const SongDisplay = ({
               <button onClick={() => handleDeleteSong(song.id)}>Delete Song</button>
               <button onClick={() => handleEditClick(song.id, song.name, song.rating)}>Edit</button>
               <button onClick={() => handleCloneSong(song.id)}>Clone Song</button>
+              <button onClick={() => setIsSongDetailsModalOpen(true)}>See Song Details</button>
               <input
                 type="checkbox"
                 checked={selectedSongIds.includes(song.id)}
@@ -86,6 +89,7 @@ export const SongDisplay = ({
               <button onClick={() => handleDeleteSong(song.id)}>Delete Song</button>
               <button onClick={() => handleEditClick(song.id, song.name, song.rating)}>Edit</button>
               <button onClick={() => handleCloneSong(song.id)}>Clone Song</button>
+              <button onClick={() => setIsSongDetailsModalOpen(true)}>See Song Details</button>
               <input
                 type="checkbox"
                 checked={selectedSongIds.includes(song.id)}
@@ -113,7 +117,7 @@ export const SongDisplay = ({
               </button>
             </div>
           </div>
-        )
+        ),
       )}
       <div>
         {selectedSongIds.length !== 0 && (
@@ -143,6 +147,10 @@ export const SongDisplay = ({
           )}
         </div>
       )}
+      <Modal isOpen={isSongDetailsModalOpen} onClose={() => setIsSongDetailsModalOpen(false)}>
+        <h2>Song Details:</h2>
+        <p>Testing 1, 2, 3</p>
+      </Modal>
     </>
   );
 };
