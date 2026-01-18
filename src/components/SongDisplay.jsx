@@ -26,6 +26,7 @@ export const SongDisplay = ({
   const [songEditedRating, setSongEditedRating] = useState(0);
   const [isError, setIsError] = useState(false);
   const [isSongDetailsModalOpen, setIsSongDetailsModalOpen] = useState(false);
+  const [songDetailId, setSongDetailId] = useState(null);
 
   const handleEditClick = (id, name, rating) => {
     setSongEditId(id);
@@ -61,6 +62,53 @@ export const SongDisplay = ({
     setNewBulkRating(Number(e.target.value));
   };
 
+  // helper function to derive and return selected song's rating (based on songDetailId) for display in song details modal
+
+  const deriveSongDetailRating = () => {
+    let rating;
+    if (!songDetailId) return 'Rating Unavailable';
+    for (const song of songs) {
+      if (songDetailId === song.id) {
+        rating = song.rating;
+      }
+    }
+    return rating;
+  };
+
+  // helper function to derive and return selected song's clone count (based on songDetailId) for display in song details modal
+
+  const deriveSongDetailCloneCount = () => {
+    let cloneCount;
+    if (!songDetailId) return 'Clone Count Unavailable';
+    for (const song of songs) {
+      if (songDetailId === song.id) {
+        cloneCount = song.cloneCount;
+      }
+    }
+    return cloneCount;
+  };
+
+  // helper function to derive and return selected song's name (based on songDetailId) for display in song details modal
+
+  const deriveSongDetailName = () => {
+    let name;
+    if (!songDetailId) return 'Name Unavailable';
+    for (const song of songs) {
+      if (songDetailId === song.id) {
+        name = song.name;
+      }
+    }
+    return name;
+  };
+
+  // helper function to derive and return selected song's category (based on songDetailId) for display in song details modal
+
+  const deriveSongDetailCategory = () => {
+    if (!songDetailId) return null;
+    let rating = deriveSongDetailRating();
+    return songMessage(rating);
+  };
+
   const deletedNames = lastDeleted.map(deletedItem => deletedItem.song.name).join(', ');
   const isMultipleDeletes = lastDeleted.length > 1;
 
@@ -76,7 +124,14 @@ export const SongDisplay = ({
               <button onClick={() => handleDeleteSong(song.id)}>Delete Song</button>
               <button onClick={() => handleEditClick(song.id, song.name, song.rating)}>Edit</button>
               <button onClick={() => handleCloneSong(song.id)}>Clone Song</button>
-              <button onClick={() => setIsSongDetailsModalOpen(true)}>See Song Details</button>
+              <button
+                onClick={() => {
+                  setSongDetailId(song.id);
+                  setIsSongDetailsModalOpen(true);
+                }}
+              >
+                See Song Details
+              </button>
               <input
                 type="checkbox"
                 checked={selectedSongIds.includes(song.id)}
@@ -89,7 +144,14 @@ export const SongDisplay = ({
               <button onClick={() => handleDeleteSong(song.id)}>Delete Song</button>
               <button onClick={() => handleEditClick(song.id, song.name, song.rating)}>Edit</button>
               <button onClick={() => handleCloneSong(song.id)}>Clone Song</button>
-              <button onClick={() => setIsSongDetailsModalOpen(true)}>See Song Details</button>
+              <button
+                onClick={() => {
+                  setSongDetailId(song.id);
+                  setIsSongDetailsModalOpen(true);
+                }}
+              >
+                See Song Details
+              </button>
               <input
                 type="checkbox"
                 checked={selectedSongIds.includes(song.id)}
@@ -147,10 +209,28 @@ export const SongDisplay = ({
           )}
         </div>
       )}
-      <Modal isOpen={isSongDetailsModalOpen} onClose={() => setIsSongDetailsModalOpen(false)}>
+      <Modal
+        isOpen={isSongDetailsModalOpen}
+        onClose={() => {
+          setIsSongDetailsModalOpen(false);
+          setSongDetailId(null);
+        }}
+      >
         <h2>Song Details:</h2>
-        <p>Testing 1, 2, 3</p>
-        <button onClick={() => setIsSongDetailsModalOpen(false)}>Close Modal</button>
+        <p>Song Name: {deriveSongDetailName()}</p>
+        <p>
+          Rating: {deriveSongDetailRating()} - {deriveSongDetailCategory()}
+        </p>
+        <p>Clone Count: {deriveSongDetailCloneCount()}</p>
+
+        <button
+          onClick={() => {
+            setIsSongDetailsModalOpen(false);
+            setSongDetailId(null);
+          }}
+        >
+          Close Modal
+        </button>
       </Modal>
     </>
   );
