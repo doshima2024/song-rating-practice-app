@@ -150,6 +150,7 @@ export const SongDisplay = ({
       <Modal isOpen={isSongDetailsModalOpen} onClose={() => setIsSongDetailsModalOpen(false)}>
         <h2>Song Details:</h2>
         <p>Testing 1, 2, 3</p>
+        <button onClick={() => setIsSongDetailsModalOpen(false)}>Close Modal</button>
       </Modal>
     </>
   );
