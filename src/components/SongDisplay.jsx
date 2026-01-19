@@ -20,6 +20,8 @@ export const SongDisplay = ({
   setNewBulkRating,
   handleEditMultipleRatings,
   handleDeleteMultipleSongsUndo,
+  toggleFavoriteSongs,
+  favoriteSongIds,
 }) => {
   const [songEditId, setSongEditId] = useState(null);
   const [songEditedName, setSongEditedName] = useState('');
@@ -82,6 +84,7 @@ export const SongDisplay = ({
           newlyAddedSongIds.includes(song.id) ? (
             <div key={song.id}>
               {`${song.name} - ${songMessage(song.rating)} - Clone Count: ${song.cloneCount} - NEWLY ADDED SONG`}
+              {favoriteSongIds.includes(song.id) && '⭐⭐⭐'}
               <button onClick={() => handleDeleteSong(song.id)}>Delete Song</button>
               <button onClick={() => handleEditClick(song.id, song.name, song.rating)}>Edit</button>
               <button onClick={() => handleCloneSong(song.id)}>Clone Song</button>
@@ -93,15 +96,23 @@ export const SongDisplay = ({
               >
                 See Song Details
               </button>
+              <label>Select For Bulk Edit: </label>
               <input
                 type="checkbox"
                 checked={selectedSongIds.includes(song.id)}
                 onChange={() => toggleSelectedSongs(song.id)}
               ></input>
+              <label>Make Song A Favorite:</label>
+              <input
+                type="checkbox"
+                checked={favoriteSongIds.includes(song.id)}
+                onChange={() => toggleFavoriteSongs(song.id)}
+              ></input>
             </div>
           ) : (
             <div key={song.id}>
-              {`${song.name} - ${songMessage(song.rating)} - Clone Count: ${song.cloneCount}`}
+              {`${song.name} - ${songMessage(song.rating)} - Clone Count: ${song.cloneCount}`}{' '}
+              {favoriteSongIds.includes(song.id) && '⭐⭐⭐'}
               <button onClick={() => handleDeleteSong(song.id)}>Delete Song</button>
               <button onClick={() => handleEditClick(song.id, song.name, song.rating)}>Edit</button>
               <button onClick={() => handleCloneSong(song.id)}>Clone Song</button>
@@ -113,10 +124,17 @@ export const SongDisplay = ({
               >
                 See Song Details
               </button>
+              <label>Select For Bulk Edit: </label>
               <input
                 type="checkbox"
                 checked={selectedSongIds.includes(song.id)}
                 onChange={() => toggleSelectedSongs(song.id)}
+              ></input>
+              <label>Make Song A Favorite:</label>
+              <input
+                type="checkbox"
+                checked={favoriteSongIds.includes(song.id)}
+                onChange={() => toggleFavoriteSongs(song.id)}
               ></input>
             </div>
           )

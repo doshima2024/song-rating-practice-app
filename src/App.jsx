@@ -46,6 +46,7 @@ function App() {
   const [newRating, setNewRating] = useState('');
   const [selectedSongIds, setSelectedSongIds] = useState([]);
   const [newBulkRating, setNewBulkRating] = useState('');
+  const [favoriteSongIds, setFavoriteSongIds] = useState([]);
 
   const undoTimerIdRef = useRef(null);
 
@@ -65,6 +66,16 @@ function App() {
     });
   };
 
+  const toggleFavoriteSongs = id => {
+    setFavoriteSongIds(prevIds => {
+      if (prevIds.includes(id)) {
+        return prevIds.filter(ID => ID !== id);
+      } else {
+        return [...prevIds, id];
+      }
+    });
+  };
+
   console.log('Selected Song IDs:', selectedSongIds);
 
   const handleAddSong = (nameText, rating) => {
@@ -79,6 +90,7 @@ function App() {
     const updatedSongs = [...songs, newSong];
     setSongs(updatedSongs);
     setNewlyAddedSongsIds(prev => [...prev, newId]);
+
     setTimeout(() => {
       setNewlyAddedSongsIds(prevIds => prevIds.filter(Id => Id !== newId));
     }, 5000);
@@ -107,9 +119,12 @@ function App() {
         return prevSongs;
       }
     });
+    setFavoriteSongIds(prevIds => {
+      return prevIds.filter(ID => ID !== id);
+    });
   };
 
-  // In undo I need to reinsert last deleted at that index using splice
+  console.log('FAVORITE SONG IDS AFTER SINGLE DELETE:', favoriteSongIds); // debug remove !!!!
 
   const handleDeleteSongUndo = () => {
     if (lastDeleted.length === 0) return;
@@ -135,9 +150,14 @@ function App() {
       setLastDeleted(deletedItems); // stores last deleted songs and their indices as an array of objects - shape: [{song: {song}, index: index}]
       return prevSongs.filter(song => !selectedSongIds.includes(song.id));
     });
+    setFavoriteSongIds(prevIds => {
+      return prevIds.filter(ID => !selectedSongIds.includes(ID));
+    });
     setSelectedSongIds([]);
     makeTrueForFiveSeconds();
   };
+
+  console.log('FAVORITE SONG IDS AFTER BULK DELETE:', favoriteSongIds); // debug remove !!!!
 
   const handleDeleteMultipleSongsUndo = () => {
     if (lastDeleted.length === 0) return;
@@ -291,6 +311,8 @@ function App() {
           setNewBulkRating={setNewBulkRating}
           handleEditMultipleRatings={handleEditMultipleRatings}
           handleDeleteMultipleSongsUndo={handleDeleteMultipleSongsUndo}
+          favoriteSongIds={favoriteSongIds}
+          toggleFavoriteSongs={toggleFavoriteSongs}
         />
         <br></br>
         <SongStats songs={songs} />
