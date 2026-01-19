@@ -62,52 +62,13 @@ export const SongDisplay = ({
     setNewBulkRating(Number(e.target.value));
   };
 
-  // helper function to derive and return selected song's rating (based on songDetailId) for display in song details modal
-
-  const deriveSongDetailRating = () => {
-    let rating;
-    if (!songDetailId) return 'Rating Unavailable';
-    for (const song of songs) {
-      if (songDetailId === song.id) {
-        rating = song.rating;
-      }
-    }
-    return rating;
-  };
-
-  // helper function to derive and return selected song's clone count (based on songDetailId) for display in song details modal
-
-  const deriveSongDetailCloneCount = () => {
-    let cloneCount;
-    if (!songDetailId) return 'Clone Count Unavailable';
-    for (const song of songs) {
-      if (songDetailId === song.id) {
-        cloneCount = song.cloneCount;
-      }
-    }
-    return cloneCount;
-  };
-
-  // helper function to derive and return selected song's name (based on songDetailId) for display in song details modal
-
-  const deriveSongDetailName = () => {
-    let name;
-    if (!songDetailId) return 'Name Unavailable';
-    for (const song of songs) {
-      if (songDetailId === song.id) {
-        name = song.name;
-      }
-    }
-    return name;
-  };
-
-  // helper function to derive and return selected song's category (based on songDetailId) for display in song details modal
-
-  const deriveSongDetailCategory = () => {
+  const deriveSongDetailObject = () => {
     if (!songDetailId) return null;
-    let rating = deriveSongDetailRating();
-    return songMessage(rating);
+    const selectedSongInArray = songs.filter(song => song.id === songDetailId);
+    return selectedSongInArray[0];
   };
+
+  const songForDetail = deriveSongDetailObject();
 
   const deletedNames = lastDeleted.map(deletedItem => deletedItem.song.name).join(', ');
   const isMultipleDeletes = lastDeleted.length > 1;
@@ -215,14 +176,20 @@ export const SongDisplay = ({
           setIsSongDetailsModalOpen(false);
           setSongDetailId(null);
         }}
+        songDetailId={songDetailId}
       >
-        <h2>Song Details:</h2>
-        <p>Song Name: {deriveSongDetailName()}</p>
-        <p>
-          Rating: {deriveSongDetailRating()} - {deriveSongDetailCategory()}
-        </p>
-        <p>Clone Count: {deriveSongDetailCloneCount()}</p>
-
+        {songForDetail ? (
+          <div>
+            <h2>Song Details:</h2>
+            <p>Song Name: {songForDetail.name}</p>
+            <p>
+              Rating: {songForDetail.rating} - {songMessage(songForDetail.rating)}
+            </p>
+            <p>Clone Count: {songForDetail.cloneCount}</p>
+          </div>
+        ) : (
+          <p>Selected Song Details Unavailable</p>
+        )}
         <button
           onClick={() => {
             setIsSongDetailsModalOpen(false);
