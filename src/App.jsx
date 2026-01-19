@@ -76,8 +76,6 @@ function App() {
     });
   };
 
-  console.log('Selected Song IDs:', selectedSongIds);
-
   const handleAddSong = (nameText, rating) => {
     let max = 0;
     for (const song of songs) {
@@ -124,8 +122,6 @@ function App() {
     });
   };
 
-  console.log('FAVORITE SONG IDS AFTER SINGLE DELETE:', favoriteSongIds); // debug remove !!!!
-
   const handleDeleteSongUndo = () => {
     if (lastDeleted.length === 0) return;
     setSongs(prevSongs => {
@@ -156,8 +152,6 @@ function App() {
     setSelectedSongIds([]);
     makeTrueForFiveSeconds();
   };
-
-  console.log('FAVORITE SONG IDS AFTER BULK DELETE:', favoriteSongIds); // debug remove !!!!
 
   const handleDeleteMultipleSongsUndo = () => {
     if (lastDeleted.length === 0) return;
